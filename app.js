@@ -3,7 +3,7 @@
    Les données restent sur le téléphone (IndexedDB). Seule la recherche d'un code-barres inconnu
    passe par Open Food Facts, et demande donc du réseau. */
 
-const APP_VERSION = "1.0.2";
+const APP_VERSION = "1.0.3";
 
 /* ---------- Stockage ---------- */
 const DB = (() => {
@@ -180,10 +180,11 @@ function renderJour() {
       <button class="icon-btn lg" data-act="day" data-k="1" aria-label="Jour suivant" ${isToday ? "disabled" : ""}>${I.right}</button></div>`;
 
   let msg;
+  const t1 = Math.round(tot * 10) / 10;   // même arrondi que le chiffre du cercle
   if (!goal) msg = `<p class="ring-msg">Pas encore d'objectif<span>Tes ajouts sont quand même comptés</span></p>`;
-  else if (tot >= goal) msg = `<p class="ring-msg ok">Objectif atteint<span>${tot - goal >= .5 ? `+${fr0(tot - goal)} g au-dessus de l'objectif` : "Pile dans le mille"}</span></p>`;
+  else if (t1 >= goal) msg = `<p class="ring-msg ok">Objectif atteint<span>${tot - goal >= .5 ? `+${fr0(tot - goal)} g au-dessus de l'objectif` : "Pile dans le mille"}</span></p>`;
   else if (!tot) msg = `<p class="ring-msg">${isToday ? "C'est parti" : "Rien de noté ce jour-là"}<span>Objectif : ${fr0(goal)} g de protéines</span></p>`;
-  else msg = `<p class="ring-msg">Encore ${fr0(goal - tot)} g<span>${Math.floor(p * 100)} % de l'objectif</span></p>`;
+  else msg = `<p class="ring-msg">Encore ${fr1(goal - t1)} g<span>${Math.floor(p * 100)} % de l'objectif</span></p>`;
 
   const banner = !(S.settings.weight > 0) ? `<div class="banner"><div><b>Ton objectif</b><span>Entre ton poids pour le calculer.</span></div><button class="btn-text bold" data-act="tab" data-tab="reglages">Régler</button></div>` : "";
 
