@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Prot'Claude</title>
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Prot'Claude">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar" id="navbar">
+  <div class="nav-in">
+    <span class="nav-title" id="nav-title">Aujourd'hui</span>
+    <button class="nav-btn" data-act="scan" aria-label="Scanner un code-barres">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M8 8.5v7M11 8.5v7M13.5 8.5v7M16 8.5v7"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section id="v-jour" class="view"></section>
+  <section id="v-aliments" class="view" hidden></section>
+  <section id="v-hist" class="view" hidden></section>
+  <section id="v-reglages" class="view" hidden></section>
+</main>
+
+<nav class="tabbar" aria-label="Sections">
+  <div class="tabbar-in">
+    <button class="tab" data-act="tab" data-tab="jour" aria-current="page">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" opacity=".35"/><path d="M12 3.5a8.5 8.5 0 0 1 8.2 10.7"/></svg>Jour</button>
+    <button class="tab" data-act="tab" data-tab="aliments">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.8c3.6 0 6.3 4.6 6.3 9 0 4.1-2.8 7.4-6.3 7.4s-6.3-3.3-6.3-7.4c0-4.4 2.7-9 6.3-9z"/></svg>Aliments</button>
+    <button class="tab" data-act="tab" data-tab="hist">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V13M10 20V8M15 20v-9M20 20V5"/></svg>Historique</button>
+    <button class="tab" data-act="tab" data-tab="reglages">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.2"/><circle cx="9" cy="17" r="2.2"/></svg>Réglages</button>
+  </div>
+</nav>
+
+<div class="sheet-wrap" id="modal" hidden><div class="sheet" id="modal-box" role="dialog" aria-modal="true"></div></div>
+<div class="dialog-wrap" id="dialog" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="zxing.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
