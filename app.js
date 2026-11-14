@@ -3,7 +3,7 @@
    Les données restent sur le téléphone (IndexedDB). Seule la recherche d'un code-barres inconnu
    passe par Open Food Facts, et demande donc du réseau. */
 
-const APP_VERSION = "1.0.1";
+const APP_VERSION = "1.0.2";
 
 /* ---------- Stockage ---------- */
 const DB = (() => {
@@ -207,7 +207,7 @@ function renderJour() {
     ${banner}
     <div class="card ring-card">
       <div class="ring">${ringSvg(tot, goal, { from })}
-        <div class="ring-in"><span class="ring-val">${fr0(tot)}<small>g</small></span><span class="ring-goal">${goal ? `sur ${fr0(goal)} g` : "de protéines"}</span></div></div>
+        <div class="ring-in"><span class="ring-val${fr1(tot).length > 4 ? " long" : ""}">${fr1(tot)}<small>g</small></span><span class="ring-goal">${goal ? `sur ${fr0(goal)} g` : "de protéines"}</span></div></div>
       ${msg}
     </div>
     <div class="btns">

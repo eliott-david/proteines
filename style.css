@@ -158,6 +158,8 @@ h1 { margin: 0; font: 700 34px/1.15 var(--display); letter-spacing: -.026em; }
 .ring-in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .ring-val { font: 700 56px/1 var(--rounded); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .ring-val small { font: 600 24px var(--rounded); margin-left: 2px; }
+.ring-val.long { font-size: 46px; }
+.ring-val.long small { font-size: 21px; }
 .ring-goal { margin-top: 6px; font: 500 15px var(--sans); color: var(--text2); font-variant-numeric: tabular-nums; }
 .ring-msg { margin: 0; text-align: center; font: 600 17px var(--display); letter-spacing: -.02em; }
 .ring-msg span { display: block; margin-top: 1px; font: 400 15px var(--sans); color: var(--text2); letter-spacing: -.01em; }
