@@ -2,7 +2,7 @@
 // Réseau d'abord (pour avoir toujours la dernière version), cache en secours si pas de réseau
 // ou si le réseau met plus de 2,5 s à répondre. Les requêtes vers Open Food Facts ne passent pas ici.
 // Changer VERSION à chaque mise à jour de l'appli.
-const VERSION = "protclaude-1.0.0";
+const VERSION = "protclaude-1.0.1";
 const FILES = ["./", "index.html", "app.js", "style.css", "zxing.min.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {

@@ -3,7 +3,7 @@
    Les données restent sur le téléphone (IndexedDB). Seule la recherche d'un code-barres inconnu
    passe par Open Food Facts, et demande donc du réseau. */
 
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.0.1";
 
 /* ---------- Stockage ---------- */
 const DB = (() => {
@@ -195,9 +195,12 @@ function renderJour() {
         <span class="tile-plus">+${fr1(portionProt(f))} g</span></span></button>`).join("")}</div>` : "";
 
   const journal = list.length
-    ? `<ul class="group">${list.map(e => `<li><button class="row row-btn" data-act="entry" data-id="${e.id}">
-        <span class="row-main"><span class="row-name">${esc(e.name)}</span><span class="row-sub">${esc(qtyText(e))} · ${fmtTime(e.ts)}</span></span>
-        <span class="row-val">${fr1(e.prot)}<small>g</small></span></button></li>`).join("")}</ul>`
+    ? `<ul class="group">${list.map(e => `<li><div class="row entry-row">
+        <button class="entry-main" data-act="entry" data-id="${e.id}">
+          <span class="row-main"><span class="row-name">${esc(e.name)}</span><span class="row-sub">${esc(qtyText(e))} · ${fmtTime(e.ts)}</span></span>
+          <span class="row-val">${fr1(e.prot)}<small>g</small></span></button>
+        <button class="icon-btn trash-btn" data-act="entry-del" data-id="${e.id}" aria-label="Retirer ${esc(e.name)} de la journée">${I.trash}</button>
+      </div></li>`).join("")}</ul>`
     : `<p class="empty">${isToday ? "Rien pour l'instant. Ajoute ce que tu manges au fil de la journée." : "Aucun aliment ce jour-là."}</p>`;
 
   $("v-jour").innerHTML = `${largeTitle(eyebrow, dayTitle(d), nav)}
@@ -429,6 +432,10 @@ function saveQty() {
   }
   closeSheet(); renderAll();
   toast(`+${fr1(prot)} g${date !== DAY ? " · " + fmtDM(date) : ""}`, { label: "Annuler", fn: () => undoAdd(e) });
+}
+function removeEntry(en) {
+  S.entries = S.entries.filter(x => x !== en); save("entries"); renderAll();
+  toast("Retiré de la journée", { label: "Annuler", fn: () => { S.entries.push(en); save("entries"); renderAll(); } });
 }
 function quickAdd(id) {
   const f = foodById(id); if (!f) return;
@@ -752,9 +759,18 @@ document.addEventListener("click", async e => {
     case "qty-chip": $("qs-qty").value = fr1(+b.dataset.v); drawQty(); break;
     case "qty-save": saveQty(); break;
     case "qty-del": {
-      const en = S.entries.find(x => x.id === QS.entryId); if (!en) return closeSheet();
-      S.entries = S.entries.filter(x => x !== en); save("entries"); closeSheet(); renderAll();
-      toast("Retiré de la journée", { label: "Annuler", fn: () => { S.entries.push(en); save("entries"); renderAll(); } });
+      const en = S.entries.find(x => x.id === QS.entryId); closeSheet();
+      if (en) removeEntry(en);
+      break;
+    }
+    case "entry-del": {
+      const en = S.entries.find(x => x.id === b.dataset.id); if (!en) break;
+      const ok = await ask({
+        title: `Retirer « ${en.name} » de la journée ?`,
+        message: `${qtyText(en)} · ${fr1(en.prot)} g de protéines`,
+        actions: [{ label: "Retirer", value: true, destructive: true }],
+      });
+      if (ok) removeEntry(en);
       break;
     }
     case "food-new": {
